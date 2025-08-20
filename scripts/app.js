@@ -74,16 +74,16 @@ const AppState = {
     
     // 🚨 YOUR CODE STARTS HERE:
 
-    is_wallet_connected: false, 
-    current_account: null,
-    current_network: null,
-    selected_option: null,
-    has_user_voted: false,
-    current_poll: null,
-    is_loading: false,
-    transaction_in_progress: false,
-    poll_title: "Who Should Be the Next F. President?",
-    poll_options:[
+    isWalletConnected: false, 
+    currentAccount: null,
+    currentNetwork: null,
+    selectedOption: null,
+    hasUserVoted: false,
+    currentPoll: null,
+    isLoading: false,
+    transactionInProgress: false,
+    pollTitle: "Who Should Be the Next F. President?",
+    pollOptions:[
         { id:0, name: "Joshua Charlse E.", votes: 0 },
         { id: 1, name: "Margeret S.", votes: 0 },
         { id: 2, name: "Tyagher D.", votes: 0 },
@@ -214,7 +214,7 @@ function calculateTotalVotes() {
     //       }, 0);
     
     // 🚨 YOUR CODE STARTS HERE:
-    return AppState.poll_options.reduce((total, option) => {
+    return AppState.pollOptions.reduce((total, option) => {
         return total + option.votes;
     }, 0);
     // 🚨 YOUR CODE ENDS HERE
@@ -230,8 +230,8 @@ function checkUserVotingStatus() {
     // HINT: Add a console.log to show the status
     
     // 🚨 YOUR CODE STARTS HERE:
-    AppState.has_user_voted = false;
-    console.log("User voting status checked:", AppState.has_user_voted);
+    AppState.hasUserVoted = false;
+    console.log("User voting status checked:", AppState.hasUserVoted);
     // 🚨 YOUR CODE ENDS HERE
 }
 
