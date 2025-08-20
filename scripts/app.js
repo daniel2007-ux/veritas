@@ -73,8 +73,22 @@ const AppState = {
     // ]
     
     // 🚨 YOUR CODE STARTS HERE:
-    
-    
+
+    is_wallet_connected: false, 
+    current_account: null,
+    current_network: null,
+    selected_option: null,
+    has_user_voted: false,
+    current_poll: null,
+    is_loading: false,
+    transaction_in_progress: false,
+    poll_title: "Who Should Be the Next F. President?",
+    poll_options:[
+        { id:0, name: "Joshua Charlse E.", votes: 0 },
+        { id: 1, name: "Margeret S.", votes: 0 },
+        { id: 2, name: "Tyagher D.", votes: 0 },
+        { id: 3, name: "Anthonia E.", votes: 0 },
+    ]
     // 🚨 YOUR CODE ENDS HERE
 };
 
@@ -130,13 +144,13 @@ function showErrorMessage(message) {
     // 1. Use alert() to show the message (we'll improve this later)
     // 2. Add an error emoji (❌) to make it clear it's an error
     // 3. Also log the error to console for debugging
-    
+
     // HINT: alert('❌ Error: ' + message);
     // HINT: console.error('❌ Error:', message);
     
     // 🚨 YOUR CODE STARTS HERE:
-    
-    
+    alert('❌ Error: ' + message);
+    console.error('❌ Error:', message);
     // 🚨 YOUR CODE ENDS HERE
 }
 
@@ -149,7 +163,8 @@ function showSuccessMessage(message) {
     
     // 🚨 YOUR CODE STARTS HERE:
     
-    
+    alert("✅ success: " + message);
+    console.log("✅ success:", message);
     // 🚨 YOUR CODE ENDS HERE
 }
 
@@ -164,8 +179,12 @@ function formatWalletAddress(address) {
     // HINT: address.length gives you the total length
     
     // 🚨 YOUR CODE STARTS HERE:
-    
-    
+    if(!address){
+        return "Not Connected"
+    }
+    const start = address.substring(0,6);
+    const end = address.substring(address.length - 4);
+    return start + "..." + end;
     // 🚨 YOUR CODE ENDS HERE
 }
 
@@ -195,8 +214,9 @@ function calculateTotalVotes() {
     //       }, 0);
     
     // 🚨 YOUR CODE STARTS HERE:
-    
-    
+    return AppState.poll_options.reduce((total, option) => {
+        return total + option.votes;
+    }, 0);
     // 🚨 YOUR CODE ENDS HERE
 }
 
@@ -210,8 +230,8 @@ function checkUserVotingStatus() {
     // HINT: Add a console.log to show the status
     
     // 🚨 YOUR CODE STARTS HERE:
-    
-    
+    AppState.has_user_voted = false;
+    console.log("User voting status checked:", AppState.has_user_voted);
     // 🚨 YOUR CODE ENDS HERE
 }
 
@@ -240,8 +260,9 @@ function updateTotalVotesDisplay() {
     // HINT: element.textContent = `Total Votes: ${total}`;
     
     // 🚨 YOUR CODE STARTS HERE:
-    
-    
+    const element1 = document.getElementById("total-votes");
+    const total = calculateTotalVotes();
+    element1.textContent = `Total Votes: ${total}`;
     // 🚨 YOUR CODE ENDS HERE
 }
 
