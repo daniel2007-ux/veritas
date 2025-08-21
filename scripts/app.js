@@ -428,22 +428,53 @@ function createVotingOptions() {
     
     // Placeholder implementation
     const container = document.getElementById('voting-options');
-    if (container) {
-        container.innerHTML = '<p style="text-align: center; padding: 20px;">📚 Complete Module 2 to see voting options here!</p>';
-    }
+    if (!container) return;
+
+    // Clear any previous content
+    container.innerHTML = '';
+
+    AppState.pollOptions.forEach(option => {
+        const btn = document.createElement('button');
+        btn.textContent = `${option.name} (${option.votes} votes)`;
+        btn.style.margin = '10px';
+        btn.onclick = function() {
+            selectVotingOption(option.id);
+        };
+        container.appendChild(btn);
+    });
 }
 
 // TODO 2.3: Complete the selectVotingOption function (Module 2)
 function selectVotingOption(optionId) {
-    // STUDENT TASK (Module 2): Handle voting option selection
-    console.log('📝 TODO: Complete this function in Module 2');
+    // Update the selected option in AppState
+    AppState.selectedOption = optionId;
     console.log('🎯 Option selected:', optionId);
+    showSuccessMessage('You selected option #' + optionId);
+    updateVotingOptionsDisplay();
 }
 
 // TODO 2.4: Complete the updateVotingOptionsDisplay function (Module 2)
 function updateVotingOptionsDisplay() {
-    // STUDENT TASK (Module 2): Update visual state of voting options
-    console.log('📝 TODO: Complete this function in Module 2');
+    // Highlight the selected voting option button
+    const container = document.getElementById('voting-options');
+    if (!container) return;
+
+    // Get all buttons inside the container
+    const buttons = container.getElementsByTagName('button');
+    for (let i = 0; i < buttons.length; i++) {
+        const btn = buttons[i];
+        // Get the option id from the button text
+        const option = AppState.pollOptions[i];
+        if (option && AppState.selectedOption === option.id) {
+            btn.style.backgroundColor = '#4caf50'; // Highlight selected
+            btn.style.color = '#fff';
+            btn.style.fontWeight = 'bold';
+        } else {
+            btn.style.backgroundColor = '';
+            btn.style.color = '';
+            btn.style.fontWeight = '';
+        }
+    }
 }
 
 // =============================================================================
