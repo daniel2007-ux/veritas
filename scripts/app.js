@@ -482,16 +482,39 @@ function updateVotingOptionsDisplay() {
 // =============================================================================
 
 // TODO 3.1: Complete the connectWallet function (Module 3)
-function connectWallet() {
+async function connectWallet() {
     // STUDENT TASK (Module 3): Connect to MetaMask wallet
-    console.log('📝 TODO: Complete this function in Module 3');
-    showErrorMessage('Wallet connection will be implemented in Module 3');
+    try {
+        // Ask MetaMask to connect
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        if (accounts.length > 0) {
+            handleWalletConnection(accounts[0]);
+        } else {
+            showErrorMessage('No accounts found');
+        }
+    } catch (error) {
+        showErrorMessage('Wallet connection failed: ' + error.message);
+    }
 }
 
 // TODO 3.2: Complete the handleWalletConnection function (Module 3)
 function handleWalletConnection(account) {
     // STUDENT TASK (Module 3): Handle successful wallet connection
-    console.log('📝 TODO: Complete this function in Module 3');
+    AppState.isWalletConnected = true;
+    AppState.currentAccount = account;
+
+    // Show success message
+    showSuccessMessage('Wallet connected: ' + formatWalletAddress(account));
+
+    // Update the wallet address display in the UI
+    updateWalletAddressDisplay();
+}
+
+function updateWalletAddressDisplay() {
+    const walletElement = document.getElementById('wallet-address');
+    if (walletElement) {
+        walletElement.textContent = `Connected: ${formatWalletAddress(AppState.currentAccount)}`;
+    }
 }
 
 // =============================================================================
